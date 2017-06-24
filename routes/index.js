@@ -8,35 +8,38 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/cars', function(req, res, next) {
-  pg.connect('postgres://localhost:5432/nima', function(err, client) {
-  if (err) throw err;
+  pg.connect('postgres://localhost:5432/nima', function(err, client, done) {
+    if (err) throw err;
 
-  client
-  .query('SELECT * FROM cars ORDER BY id DESC')
-    .then(data => {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data.rows
+    client
+      .query('SELECT * FROM cars ORDER BY id DESC')
+        .then(data => {
+          res.status(200)
+            .json({
+              status: 'success',
+              data: data.rows
+            })
         })
-    })
+    done()
   });
+
 });
 
 router.post('/cars', function(req, res, next) {
   const data = req.body
   const newCarData = [data.make, data.model, data.year]
-  pg.connect('postgres://localhost:5432/nima', function(err, client) {
-  if (err) throw err;
+  pg.connect('postgres://localhost:5432/nima', function(err, client, done) {
+    if (err) throw err;
 
-  client
-    .query(`INSERT into cars (make, model, year) VALUES ($1, $2, $3)`, newCarData)
-      .then(() => {
-        res.status(200)
-          .json({
-            status: 'success',
-          })
-      })
-    });
+    client
+      .query(`INSERT into cars (make, model, year) VALUES ($1, $2, $3)`, newCarData)
+        .then(() => {
+          res.status(200)
+            .json({
+              status: 'success',
+            })
+        })
+    done()
+  });
 });
 module.exports = router;
