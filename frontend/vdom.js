@@ -1,6 +1,6 @@
 import { init }                 from 'snabbdom'
 import h                        from 'snabbdom/h'
-import carList                  from './components/carList'
+import view                     from './components/view'
 
 const patch = init([
   require('snabbdom/modules/class').default,
@@ -10,9 +10,9 @@ const patch = init([
 ]);
 
 const createRenderer = (root, initialState) => {
-  let vnode = patch(root, carList(initialState))
+  let vnode = patch(root, view(initialState))
   return state => {
-    vnode = patch(vnode, carList(state));
+    vnode = patch(vnode, view(state));
   }
 }
 
