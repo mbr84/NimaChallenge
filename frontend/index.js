@@ -4,11 +4,11 @@ import { Map, List } from 'immutable'
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('list-root');
-  const render = createRenderer(root, new Map({ adding: false, cars: new List() }).get('cars'));
+  const initialState = new Map({ isAdding: false, cars: new List(), currentPage: 0 })
+  const render = createRenderer(root, initialState);
   const state = initializeAppState();
 
   state.subscribe(currentState => {
-    currentState.get('cars')
-    render(currentState.get('cars'))
+    render(currentState)
   })
 })
