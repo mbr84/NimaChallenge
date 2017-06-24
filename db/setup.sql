@@ -12,8 +12,10 @@ CREATE TABLE cars (
 );
 
 CREATE TABLE prices (
-  id INTEGER,
+  id SERIAL PRIMARY KEY,
+  car_id INTEGER,
   year INTEGER,
   price INTEGER
-
 );
+
+CREATE INDEX ON prices (car_id);
