@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import { renderChart } from '../utils/utils'
-import { canvas, div } from 'snabbdom-helpers'
+import { canvas, div, i } from 'snabbdom-helpers'
 
 const chartView = state => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
-  if (show && state.get('data').size > 0) renderChart(state)
+  if (show) renderChart(state)
 
   return div({
     selector: '.modal-outer',
@@ -28,14 +28,32 @@ const chartView = state => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         visibility,
+        backgroundColor: 'white',
+        padding: '10px',
+        boxSizing: 'border-box'
       },
-      inner: canvas({
-        selector: '#myChart',
-        style: {
-          backgroundColor: 'white',
-          padding: '5px'
-        }
-      })
+      inner: [
+        div({
+          style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
+          inner: [
+          div({}),
+          i({
+            selector: ".material-icons",
+            inner: "close",
+            style: { cursor: 'pointer' },
+            on: { click: state.get('toggleChart') }
+          })
+        ]}),
+        div({
+          inner: canvas({
+            selector: '#myChart',
+            style: {
+              backgroundColor: 'white'
+            }
+          })
+        })
+
+      ]
     })
   })
 }

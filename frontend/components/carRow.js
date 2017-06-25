@@ -9,8 +9,7 @@ const carRow = car =>
       td({inner: car.year}),
       td({
         selector: ".price-cell",
-        props: { id: car.id },
-        inner: img({ props: {src: "./images/data-icon.png"} })
+        inner: img({ props: {src: "./images/data-icon.png", id: car.id } })
       }),
     ]
   })

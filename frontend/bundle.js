@@ -51224,8 +51224,7 @@ var carRow = function carRow(car) {
   return (0, _snabbdomHelpers.tr)({
     inner: [(0, _snabbdomHelpers.td)({ inner: car.make }), (0, _snabbdomHelpers.td)({ inner: car.model }), (0, _snabbdomHelpers.td)({ inner: car.year }), (0, _snabbdomHelpers.td)({
       selector: ".price-cell",
-      props: { id: car.id },
-      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png" } })
+      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png", id: car.id } })
     })]
   });
 };
@@ -65810,7 +65809,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var chartView = function chartView(state) {
   var show = state.get('show');
   var visibility = show ? "visible" : "hidden";
-  if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
+  if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',
@@ -65832,15 +65831,26 @@ var chartView = function chartView(state) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        visibility: visibility
+        visibility: visibility,
+        backgroundColor: 'white',
+        padding: '10px',
+        boxSizing: 'border-box'
       },
-      inner: (0, _snabbdomHelpers.canvas)({
-        selector: '#myChart',
-        style: {
-          backgroundColor: 'white',
-          padding: '5px'
-        }
-      })
+      inner: [(0, _snabbdomHelpers.div)({
+        style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
+        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
+          selector: ".material-icons",
+          inner: "close",
+          style: { cursor: 'pointer' },
+          on: { click: state.get('toggleChart') }
+        })] }), (0, _snabbdomHelpers.div)({
+        inner: (0, _snabbdomHelpers.canvas)({
+          selector: '#myChart',
+          style: {
+            backgroundColor: 'white'
+          }
+        })
+      })]
     })
   });
 };
@@ -78652,27 +78662,23 @@ var chartStateStreams = function chartStateStreams() {
     return toggleChartSubject.next();
   };
 
-  var exitTableStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseleave');
-  var chartDataRequests = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').flatMap(function () {
-    return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('.price-cell'), 'mouseenter').takeUntil(exitTableStream);
+  var chartDataRequests = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').switchMap(function () {
+    return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
   }).map(function (e) {
     return 'http://localhost:3000/prices?id=' + e.currentTarget.id;
   }).distinctUntilChanged().auditTime(50).switchMap(function (url) {
     return _jquery2.default.ajax(url);
   }).map(function (res) {
     return function (state) {
-      return state.setIn(['chart', 'data'], new _immutable.List(res.data));
+      return state.setIn(['chart', 'data'], new _immutable.List(res.data)).setIn(['chart', 'show'], true);
     };
   });
 
-  var showChartStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').flatMap(function () {
-    return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
-  }).mapTo(function (state) {
-    return state.setIn(['chart', 'show'], true);
+  _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('.chart-container'), 'click').forEach(function (e) {
+    return e.stopPropagation();
   });
-
   return {
-    chartStreams: _rxjs2.default.Observable.merge(toggleChartStream, showChartStream, chartDataRequests),
+    chartStreams: _rxjs2.default.Observable.merge(toggleChartStream, chartDataRequests),
     toggleChart: toggleChart
   };
 };
