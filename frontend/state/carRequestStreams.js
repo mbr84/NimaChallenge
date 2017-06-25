@@ -41,9 +41,8 @@ const carRequestStreams = () => {
 
   return {
     formSubmissionStream,
-    refreshCarsStream,
     inputRequiredStream,
-    requestingStream
+    requestStreams: Rx.Observable.merge(refreshCarsStream, requestingStream)
   }
 }
 
