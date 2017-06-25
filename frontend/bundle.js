@@ -65811,7 +65811,7 @@ var chartView = function chartView(state) {
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
   var chartNode = void 0;
-  if (tate.get('data').size === 0) {
+  if (state.get('data').size === 0) {
     chartNode = d({
       style: { verticalAlign: 'center', textAlign: 'center' },
       inner: "Sorry, there's no data available for this car"
