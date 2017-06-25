@@ -59,12 +59,7 @@ const chartView = state => {
           })
         ]}),
         div({
-          inner: canvas({
-            selector: '#myChart',
-            style: {
-              backgroundColor: 'white'
-            }
-          })
+          inner: chartNode
         })
 
       ]
