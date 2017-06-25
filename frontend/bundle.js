@@ -65849,8 +65849,7 @@ var chartView = function chartView(state) {
         inner: (0, _snabbdomHelpers.canvas)({
           selector: '#myChart',
           style: {
-            backgroundColor: 'white',
-            visibility: chartVisibility
+            backgroundColor: 'white'
           }
         })
       })]

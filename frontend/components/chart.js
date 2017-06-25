@@ -50,8 +50,7 @@ const chartView = state => {
           inner: canvas({
             selector: '#myChart',
             style: {
-              backgroundColor: 'white',
-              visibility: chartVisibility
+              backgroundColor: 'white'
             }
           })
         })
