@@ -9,7 +9,7 @@ export const config = (data, years) => ({
   data: {
     labels: years,
     datasets: [{
-      label: "Car Value ",
+      label: "Your Car's Value Over Time",
       backgroundColor: 'blue',
       borderColor: 'blue',
       data,
