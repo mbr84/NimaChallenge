@@ -23,9 +23,9 @@ const addCarForm = isAdding =>{
         props: { type: 'submit' },
         inner: [buttonText]
       }),
-      div({ props: { className: 'error', id: 'make-error' }, inner: "Please Fill in this Field" }),
-      div({ props: { className: 'error', id: 'model-error' }, inner: "Please Fill in this Field" }),
-      div({ props: { className: 'error', id: 'year-error' }, inner: "Please add a Valid Year" }),
+      div({ props: { className: 'error', id: 'make-error' }, inner: "Please Fill in Make Field" }),
+      div({ props: { className: 'error', id: 'model-error' }, inner: "Please Fill in Model Field" }),
+      div({ props: { className: 'error', id: 'year-error' }, inner: "Please Add a Valid Year" }),
       div({ props: { className: 'error' } }),
 
     ]
