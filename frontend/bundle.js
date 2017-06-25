@@ -51224,7 +51224,7 @@ var carRow = function carRow(car) {
   return (0, _snabbdomHelpers.tr)({
     inner: [(0, _snabbdomHelpers.td)({ inner: car.make }), (0, _snabbdomHelpers.td)({ inner: car.model }), (0, _snabbdomHelpers.td)({ inner: car.year }), (0, _snabbdomHelpers.td)({
       selector: ".price-cell",
-      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png", id: car.id } })
+      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png", id: car.id }, data: { make: car.make, model: car.model, year: car.year } })
     })]
   });
 };
