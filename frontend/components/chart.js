@@ -24,8 +24,8 @@ const chartView = state => {
         backgroundColor: 'white'
       }
     })
+    renderChart(state)
   }
-  if (show) renderChart(state)
 
   return div({
     selector: '.modal-outer',

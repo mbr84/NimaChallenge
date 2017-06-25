@@ -65828,8 +65828,8 @@ var chartView = function chartView(state) {
         backgroundColor: 'white'
       }
     });
+    (0, _utils.renderChart)(state);
   }
-  if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',
