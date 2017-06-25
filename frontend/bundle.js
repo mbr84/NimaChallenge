@@ -65787,10 +65787,87 @@ exports.default = carRequestStreams;
 
 /***/ }),
 /* 828 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Unexpected token (7:18)\n\n\u001b[0m \u001b[90m  5 | \u001b[39m\u001b[36mconst\u001b[39m chartView \u001b[33m=\u001b[39m state \u001b[33m=>\u001b[39m {\n \u001b[90m  6 | \u001b[39m  \u001b[36mconst\u001b[39m show \u001b[33m=\u001b[39m state\u001b[33m.\u001b[39mget(\u001b[32m'show'\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  7 | \u001b[39m  let visibility\u001b[33m,\u001b[39m \u001b[33m=\u001b[39m\n \u001b[90m    | \u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  8 | \u001b[39m     opacity\u001b[33m,\u001b[39m\n \u001b[90m  9 | \u001b[39m     backgroundColor\u001b[33m;\u001b[39m\n \u001b[90m 10 | \u001b[39m  \u001b[36mif\u001b[39m (show) {\u001b[0m\n");
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _jquery = __webpack_require__(69);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _utils = __webpack_require__(826);
+
+var _snabbdomHelpers = __webpack_require__(39);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var chartView = function chartView(state) {
+  var show = state.get('show');
+  var visibility = void 0,
+      opacity = void 0,
+      backgroundColor = void 0;
+  if (show) {
+    visibility = 'visible';
+    opacity = '1';
+    backgroundColor = 'white';
+    (0, _utils.renderChart)(state);
+  } else {
+    visibility = 'hidden';
+    opacity = '0';
+    backgroundColor = 'rgba(0,0,0, .5)';
+  }
+
+  return (0, _snabbdomHelpers.div)({
+    selector: '.modal-outer',
+    style: {
+      opacity: opacity,
+      backgroundColor: 'rgba(0, 0, 0, .5)',
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      height: '100vh',
+      width: '100vw',
+      visibility: visibility
+    },
+    on: { click: state.get('toggleChart') },
+    inner: (0, _snabbdomHelpers.div)({
+      selector: '.chart-container',
+      style: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        visibility: visibility,
+        backgroundColor: backgroundColor,
+        padding: '10px',
+        boxSizing: 'border-box',
+        opacity: 1
+      },
+      inner: [(0, _snabbdomHelpers.div)({
+        style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
+        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
+          selector: ".material-icons",
+          inner: "close",
+          style: { cursor: 'pointer' },
+          on: { click: state.get('toggleChart') }
+        })] }), (0, _snabbdomHelpers.div)({
+        inner: (0, _snabbdomHelpers.canvas)({
+          selector: '#myChart',
+          style: {
+            backgroundColor: 'white'
+          }
+        })
+      })]
+    })
+  });
+};
+
+exports.default = chartView;
 
 /***/ }),
 /* 829 */

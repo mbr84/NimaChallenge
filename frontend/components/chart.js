@@ -4,7 +4,7 @@ import { canvas, div, i } from 'snabbdom-helpers'
 
 const chartView = state => {
   const show = state.get('show')
-  let visibility, =
+  let visibility,
      opacity,
      backgroundColor;
   if (show) {
