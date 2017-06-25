@@ -65810,26 +65810,9 @@ var chartView = function chartView(state) {
   var show = state.get('show');
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
-  var chartNode = void 0;
-  if (state.get('data').size === 0) {
-    chartNode = (0, _snabbdomHelpers.div)({
-      style: {
-        verticalAlign: 'center',
-        textAlign: 'center',
-        padding: '100px 0 124px 0',
-        fontSize: '24px'
-      },
-      inner: "Sorry, there's no data available for this car"
-    });
-  } else {
-    chartNode = (0, _snabbdomHelpers.canvas)({
-      selector: '#myChart',
-      style: {
-        backgroundColor: 'white'
-      }
-    });
-    (0, _utils.renderChart)(state);
-  }
+  var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
+  var errorTransform = state.get('data').size === 0 ? "translateY(50vh)" : "none";
+  if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',
@@ -65857,13 +65840,19 @@ var chartView = function chartView(state) {
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
-        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
+        inner: [(0, _snabbdomHelpers.div)({ inner: text }), (0, _snabbdomHelpers.i)({
           selector: ".material-icons",
           inner: "close",
           style: { cursor: 'pointer' },
           on: { click: state.get('toggleChart') }
         })] }), (0, _snabbdomHelpers.div)({
-        inner: chartNode
+        inner: (0, _snabbdomHelpers.canvas)({
+          selector: '#myChart',
+          style: {
+            backgroundColor: 'white',
+            visibility: chartVisibility
+          }
+        })
       })]
     })
   });

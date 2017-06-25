@@ -6,26 +6,9 @@ const chartView = state => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
-  let chartNode;
-  if (state.get('data').size === 0) {
-    chartNode = div({
-      style: {
-        verticalAlign: 'center',
-        textAlign: 'center',
-        padding: '100px 0 124px 0',
-        fontSize: '24px'
-      },
-      inner: "Sorry, there's no data available for this car"
-    })
-  } else {
-    chartNode =  canvas({
-      selector: '#myChart',
-      style: {
-        backgroundColor: 'white'
-      }
-    })
-    renderChart(state)
-  }
+  const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
+  const errorTransform = state.get('data').size === 0 ? "translateY(50vh)" : "none"
+  if (show) renderChart(state)
 
   return div({
     selector: '.modal-outer',
@@ -55,7 +38,7 @@ const chartView = state => {
         div({
           style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
           inner: [
-          div({}),
+          div({inner: text}),
           i({
             selector: ".material-icons",
             inner: "close",
@@ -64,7 +47,13 @@ const chartView = state => {
           })
         ]}),
         div({
-          inner: chartNode
+          inner: canvas({
+            selector: '#myChart',
+            style: {
+              backgroundColor: 'white',
+              visibility: chartVisibility
+            }
+          })
         })
 
       ]
