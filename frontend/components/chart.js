@@ -7,7 +7,8 @@ const chartView = state => {
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
   const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
-  const errorTransform = state.get('data').size === 0 ? "translateY(50vh)" : "none"
+  const chartVisibility = state.get('data').size === 0 ? "hidden" : "visible"
+  const errorTransform = state.get('data').size === 0 ? "translate(30%, 20vh)" : "none"
   if (show) renderChart(state)
 
   return div({
@@ -38,7 +39,11 @@ const chartView = state => {
         div({
           style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
           inner: [
-          div({inner: text}),
+          div({inner: text, style: {
+            verticalAlign : 'center',
+            textAlign: 'center',
+            transform: errorTransform
+          }}),
           i({
             selector: ".material-icons",
             inner: "close",
