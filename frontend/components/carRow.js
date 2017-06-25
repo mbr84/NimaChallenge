@@ -1,4 +1,4 @@
-import { tr, td } from 'snabbdom-helpers'
+import { tr, td, img } from 'snabbdom-helpers'
 import h from 'snabbdom/h'
 
 const carRow = car =>
@@ -8,7 +8,9 @@ const carRow = car =>
       td({inner: car.model}),
       td({inner: car.year}),
       td({
-        inner: h("img", { props: {src: "./images/data-icon.png"} })
+        selector: ".price-cell",
+        props: { id: car.id },
+        inner: img({ props: {src: "./images/data-icon.png"} })
       }),
     ]
   })
