@@ -6,7 +6,7 @@ const chartView = state => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
-  const text = state.get('data').length === 0 ? "Sorry, there's no data available for this car" : ""
+  const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
   if (show) renderChart(state)
 
   return div({
