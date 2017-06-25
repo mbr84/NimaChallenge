@@ -5,12 +5,13 @@ import { canvas, div, i } from 'snabbdom-helpers'
 const chartView = state => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
+  const opacity = show ? "1" : "0"
   if (show) renderChart(state)
 
   return div({
     selector: '.modal-outer',
     style: {
-      opacity: '1',
+      opacity,
       backgroundColor: 'rgba(0, 0, 0, .5)',
       position: 'fixed',
       top: '0',
@@ -30,7 +31,8 @@ const chartView = state => {
         visibility,
         backgroundColor: 'white',
         padding: '10px',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        opacity,
       },
       inner: [
         div({

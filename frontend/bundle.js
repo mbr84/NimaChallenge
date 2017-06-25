@@ -65809,12 +65809,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var chartView = function chartView(state) {
   var show = state.get('show');
   var visibility = show ? "visible" : "hidden";
+  var opacity = show ? "1" : "0";
   if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',
     style: {
-      opacity: '1',
+      opacity: opacity,
       backgroundColor: 'rgba(0, 0, 0, .5)',
       position: 'fixed',
       top: '0',
@@ -65834,7 +65835,8 @@ var chartView = function chartView(state) {
         visibility: visibility,
         backgroundColor: 'white',
         padding: '10px',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        opacity: opacity
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
