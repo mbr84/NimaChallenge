@@ -13,12 +13,12 @@ const chartView = state => {
         verticalAlign: 'center',
         textAlign: 'center',
         padding: '100px 0 124px 0',
-        fontSize: 24px
+        fontSize: '24px'
       },
       inner: "Sorry, there's no data available for this car"
     })
   } else {
-  chartNode =  canvas({
+    chartNode =  canvas({
       selector: '#myChart',
       style: {
         backgroundColor: 'white'

@@ -65787,10 +65787,89 @@ exports.default = carRequestStreams;
 
 /***/ }),
 /* 828 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Identifier directly after number (16:20)\n\n\u001b[0m \u001b[90m 14 | \u001b[39m        textAlign\u001b[33m:\u001b[39m \u001b[32m'center'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 15 | \u001b[39m        padding\u001b[33m:\u001b[39m \u001b[32m'100px 0 124px 0'\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 16 | \u001b[39m        fontSize\u001b[33m:\u001b[39m \u001b[35m24\u001b[39mpx\n \u001b[90m    | \u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 17 | \u001b[39m      }\u001b[33m,\u001b[39m\n \u001b[90m 18 | \u001b[39m      inner\u001b[33m:\u001b[39m \u001b[32m\"Sorry, there's no data available for this car\"\u001b[39m\n \u001b[90m 19 | \u001b[39m    })\u001b[0m\n");
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _jquery = __webpack_require__(69);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _utils = __webpack_require__(826);
+
+var _snabbdomHelpers = __webpack_require__(39);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var chartView = function chartView(state) {
+  var show = state.get('show');
+  var visibility = show ? "visible" : "hidden";
+  var opacity = show ? "1" : "0";
+  var chartNode = void 0;
+  if (state.get('data').size === 0) {
+    chartNode = (0, _snabbdomHelpers.div)({
+      style: {
+        verticalAlign: 'center',
+        textAlign: 'center',
+        padding: '100px 0 124px 0',
+        fontSize: '24px'
+      },
+      inner: "Sorry, there's no data available for this car"
+    });
+  } else {
+    chartNode = (0, _snabbdomHelpers.canvas)({
+      selector: '#myChart',
+      style: {
+        backgroundColor: 'white'
+      }
+    });
+  }
+  if (show) (0, _utils.renderChart)(state);
+
+  return (0, _snabbdomHelpers.div)({
+    selector: '.modal-outer',
+    style: {
+      opacity: opacity,
+      visibility: visibility,
+      backgroundColor: 'rgba(0, 0, 0, .5)',
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      height: '100vh',
+      width: '100vw'
+    },
+    on: { click: state.get('toggleChart') },
+    inner: (0, _snabbdomHelpers.div)({
+      selector: '.chart-container',
+      style: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: 'white',
+        padding: '10px',
+        boxSizing: 'border-box'
+      },
+      inner: [(0, _snabbdomHelpers.div)({
+        style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
+        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
+          selector: ".material-icons",
+          inner: "close",
+          style: { cursor: 'pointer' },
+          on: { click: state.get('toggleChart') }
+        })] }), (0, _snabbdomHelpers.div)({
+        inner: chartNode
+      })]
+    })
+  });
+};
+
+exports.default = chartView;
 
 /***/ }),
 /* 829 */
