@@ -65810,9 +65810,7 @@ var chartView = function chartView(state) {
   var show = state.get('show');
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
-  var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
-  var chartVisibility = state.get('data').size === 0 ? "hidden" : "visible";
-  var errorTransform = state.get('data').size === 0 ? "translate(30%, 20vh)" : "none";
+  var text = state.get('data').length === 0 ? "Sorry, there's no data available for this car" : "";
   if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
@@ -65841,11 +65839,7 @@ var chartView = function chartView(state) {
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
-        inner: [(0, _snabbdomHelpers.div)({ inner: text, style: {
-            verticalAlign: 'center',
-            textAlign: 'center',
-            transform: errorTransform
-          } }), (0, _snabbdomHelpers.i)({
+        inner: [(0, _snabbdomHelpers.div)({ style: { color: '#e0475c' }, inner: text }), (0, _snabbdomHelpers.i)({
           selector: ".material-icons",
           inner: "close",
           style: { cursor: 'pointer' },
