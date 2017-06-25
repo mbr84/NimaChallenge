@@ -1,5 +1,5 @@
-import createRenderer from './vdom'
-import initializeAppState from './appState'
+import createRenderer from './state/vdom'
+import initializeAppState from './state/appState'
 import { Map, List } from 'immutable'
 
 document.addEventListener("DOMContentLoaded", () => {

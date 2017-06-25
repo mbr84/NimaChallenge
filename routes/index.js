@@ -22,6 +22,7 @@ router.get('/cars', function(req, res, next) {
         })
     done()
   });
+  pg.end()
 
 });
 
@@ -41,5 +42,6 @@ router.post('/cars', function(req, res, next) {
         })
     done()
   });
+  pg.end()
 });
 module.exports = router;

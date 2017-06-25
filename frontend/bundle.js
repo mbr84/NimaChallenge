@@ -26230,11 +26230,11 @@ exports.VirtualAction = VirtualAction;
 "use strict";
 
 
-var _vdom = __webpack_require__(198);
+var _vdom = __webpack_require__(709);
 
 var _vdom2 = _interopRequireDefault(_vdom);
 
-var _appState = __webpack_require__(426);
+var _appState = __webpack_require__(710);
 
 var _appState2 = _interopRequireDefault(_appState);
 
@@ -26254,40 +26254,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /***/ }),
-/* 198 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _snabbdom = __webpack_require__(199);
-
-var _h = __webpack_require__(33);
-
-var _h2 = _interopRequireDefault(_h);
-
-var _view = __webpack_require__(202);
-
-var _view2 = _interopRequireDefault(_view);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var patch = (0, _snabbdom.init)([__webpack_require__(422).default, __webpack_require__(423).default, __webpack_require__(424).default, __webpack_require__(425).default]);
-
-var createRenderer = function createRenderer(root, initialState) {
-  var vnode = patch(root, (0, _view2.default)(initialState));
-  return function (state) {
-    vnode = patch(vnode, (0, _view2.default)(state));
-  };
-};
-
-exports.default = createRenderer;
-
-/***/ }),
+/* 198 */,
 /* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34879,7 +34846,7 @@ var addCarForm = function addCarForm(isAdding) {
     }), (0, _snabbdomHelpers.button)({
       props: { type: 'submit' },
       inner: [buttonText]
-    }), (0, _snabbdomHelpers.div)({ props: { className: 'error', id: 'make-error' }, inner: "Please Fill in this Field" }), (0, _snabbdomHelpers.div)({ props: { className: 'error', id: 'model-error' }, inner: "Please Fill in this Field" }), (0, _snabbdomHelpers.div)({ props: { className: 'error', id: 'year-error' }, inner: "Please add a Valid Year" }), (0, _snabbdomHelpers.div)({ props: { className: 'error' } })]
+    }), (0, _snabbdomHelpers.div)({ props: { className: 'error', id: 'make-error' }, inner: "Please Fill in Make Field" }), (0, _snabbdomHelpers.div)({ props: { className: 'error', id: 'model-error' }, inner: "Please Fill in Model Field" }), (0, _snabbdomHelpers.div)({ props: { className: 'error', id: 'year-error' }, inner: "Please Add a Valid Year" }), (0, _snabbdomHelpers.div)({ props: { className: 'error' } })]
   });
 };
 exports.default = addCarForm;
@@ -35201,101 +35168,7 @@ exports.default = exports.eventListenersModule;
 //# sourceMappingURL=eventlisteners.js.map
 
 /***/ }),
-/* 426 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _rxjs = __webpack_require__(427);
-
-var _rxjs2 = _interopRequireDefault(_rxjs);
-
-var _immutable = __webpack_require__(196);
-
-var _utils = __webpack_require__(708);
-
-var _jquery = __webpack_require__(163);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var initializeAppState = function initializeAppState() {
-  var nextPageSubject = new _rxjs2.default.Subject();
-  var nextPageClickStream = nextPageSubject.map(function () {
-    return function (state) {
-      var newPage = +state.get('currentPage') + 1;
-      (0, _utils.localStorageAsync)(newPage);
-      return state.set('currentPage', newPage);
-    };
-  });
-
-  var lastPageSubject = new _rxjs2.default.Subject();
-  var lastPageClickStream = lastPageSubject.map(function () {
-    return function (state) {
-      var newPage = state.get('currentPage') - 1;
-      (0, _utils.localStorageAsync)(newPage);
-      return state.set('currentPage', newPage);
-    };
-  });
-
-  var initialState = new _immutable.Map({
-    nextPage: function nextPage() {
-      return nextPageSubject.next();
-    },
-    lastPage: function lastPage() {
-      return lastPageSubject.next();
-    },
-    totalPages: 0,
-    isAdding: false,
-    cars: new _immutable.List(),
-    currentPage: window.localStorage.getItem('currentPage') || 0
-  });
-
-  var addCarClickStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('form'), 'submit');
-  var formSubmissionStream = addCarClickStream.share().forEach(function (e) {
-    return e.preventDefault();
-  });
-
-  var inputBlurStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('input'), 'blur');
-  inputBlurStream.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)('button'), 'mousedown')).forEach(function (e) {
-    return (0, _jquery2.default)(e.currentTarget).attr('required', true);
-  });
-
-  var requestingStream = addCarClickStream.share().map(function () {
-    return function (state) {
-      return state.set('isAdding', true);
-    };
-  });
-
-  var requestStream = addCarClickStream.mapTo('http://localhost:3000/cars');
-
-  var responseStream = requestStream.flatMap(function (requestUrl) {
-    var data = { make: (0, _jquery2.default)('#make').val(), model: (0, _jquery2.default)('#model').val(), year: (0, _jquery2.default)('#year').val() };
-    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax({ url: requestUrl, method: 'post', data: data }));
-  });
-
-  var refreshCarListStream = responseStream.startWith(null).flatMap(function () {
-    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax('http://localhost:3000/cars'));
-  }).map(function (res) {
-    return function (state) {
-      return state.set('cars', new _immutable.List(res.data)).set('isAdding', false).set('totalPages', Math.floor(res.data.length / 15));
-    };
-  });
-
-  return _rxjs2.default.Observable.merge(lastPageClickStream, nextPageClickStream, requestingStream, refreshCarListStream).scan(function (acc, curr) {
-    return curr(acc);
-  }, initialState);
-};
-
-exports.default = initializeAppState;
-
-/***/ }),
+/* 426 */,
 /* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49552,7 +49425,151 @@ var navButtons = function navButtons(state) {
 exports.default = navButtons;
 
 /***/ }),
-/* 708 */
+/* 708 */,
+/* 709 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _snabbdom = __webpack_require__(199);
+
+var _h = __webpack_require__(33);
+
+var _h2 = _interopRequireDefault(_h);
+
+var _view = __webpack_require__(202);
+
+var _view2 = _interopRequireDefault(_view);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var patch = (0, _snabbdom.init)([__webpack_require__(422).default, __webpack_require__(423).default, __webpack_require__(424).default, __webpack_require__(425).default]);
+
+var createRenderer = function createRenderer(root, initialState) {
+  var vnode = patch(root, (0, _view2.default)(initialState));
+  return function (state) {
+    vnode = patch(vnode, (0, _view2.default)(state));
+  };
+};
+
+exports.default = createRenderer;
+
+/***/ }),
+/* 710 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _rxjs = __webpack_require__(427);
+
+var _rxjs2 = _interopRequireDefault(_rxjs);
+
+var _immutable = __webpack_require__(196);
+
+var _utils = __webpack_require__(711);
+
+var _jquery = __webpack_require__(163);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var initializeAppState = function initializeAppState() {
+  // Setup subjects and functions for navigating results pages
+  var nextPageSubject = new _rxjs2.default.Subject();
+  var nextPageClickStream = nextPageSubject.map(function () {
+    return function (state) {
+      var newPage = +state.get('currentPage') + 1;
+      (0, _utils.localStorageAsync)(newPage);
+      return state.set('currentPage', newPage);
+    };
+  });
+
+  var lastPageSubject = new _rxjs2.default.Subject();
+  var lastPageClickStream = lastPageSubject.map(function () {
+    return function (state) {
+      var newPage = state.get('currentPage') - 1;
+      (0, _utils.localStorageAsync)(newPage);
+      return state.set('currentPage', newPage);
+    };
+  });
+
+  var initialState = new _immutable.Map({
+    nextPage: function nextPage() {
+      return nextPageSubject.next();
+    },
+    lastPage: function lastPage() {
+      return lastPageSubject.next();
+    },
+    totalPages: 0,
+    isAdding: false,
+    cars: new _immutable.List(),
+    currentPage: window.localStorage.getItem('currentPage') || 0
+  });
+
+  // Add Car form
+  var addCarClickStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('form'), 'submit');
+  var formSubmissionStream = addCarClickStream.share().forEach(function (e) {
+    return e.preventDefault();
+  });
+
+  // don't start validating input fields until they've been focused and unfocused
+  var inputBlurStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('input'), 'blur');
+  inputBlurStream.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)('button'), 'mousedown')).forEach(function (e) {
+    return (0, _jquery2.default)(e.currentTarget).attr('required', true);
+  });
+
+  // stream of submit button clicks -> stream of functions to change state.isAdding to true
+  var requestingStream = addCarClickStream.share().map(function () {
+    return function (state) {
+      return state.set('isAdding', true);
+    };
+  });
+
+  var requestStream = addCarClickStream.mapTo('http://localhost:3000/cars');
+
+  var responseStream = requestStream.flatMap(function (requestUrl) {
+    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax({
+      url: requestUrl,
+      method: 'post',
+      data: {
+        make: (0, _jquery2.default)('#make').val(),
+        model: (0, _jquery2.default)('#model').val(),
+        year: (0, _jquery2.default)('#year').val()
+      }
+    }));
+  });
+
+  // stream of responses to POSTs to /cars -> stream of GET requests to /cars
+  var refreshCarListStream = responseStream.startWith('initial GET cars request').flatMap(function () {
+    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax('http://localhost:3000/cars'));
+  }).map(function (res) {
+    return function (state) {
+      return (// stream of GET requests to /cars -> stream of fn's updating state
+        state.set('cars', new _immutable.List(res.data)).set('isAdding', false).set('totalPages', Math.floor(res.data.length / 15))
+      );
+    };
+  });
+
+  return _rxjs2.default.Observable.merge(lastPageClickStream, nextPageClickStream, requestingStream, refreshCarListStream).scan(function (acc, curr) {
+    return curr(acc);
+  }, initialState);
+};
+
+exports.default = initializeAppState;
+
+/***/ }),
+/* 711 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
