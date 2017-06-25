@@ -28,11 +28,9 @@ const chartView = state => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        visibility,
         backgroundColor: 'white',
         padding: '10px',
         boxSizing: 'border-box',
-        opacity
       },
       inner: [
         div({

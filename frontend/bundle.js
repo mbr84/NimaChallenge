@@ -65832,11 +65832,9 @@ var chartView = function chartView(state) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        visibility: visibility,
         backgroundColor: 'white',
         padding: '10px',
-        boxSizing: 'border-box',
-        opacity: opacity
+        boxSizing: 'border-box'
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
