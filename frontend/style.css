@@ -136,7 +136,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .chart-container, .modal-outer {
-  transition: opacity .5s;
+  transition: all .5s;
 }
 
 img {
