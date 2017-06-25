@@ -3,12 +3,14 @@ var router = express.Router();
 var path = require('path');
 var pg = require('pg')
 
+pg.defaults.ssl = true;
+
 router.get('/', function(req, res, next) {
   res.sendFile(path.resolve(__dirname, '../frontend', 'index.html'), { title: 'Your Used Car Lot' });
 });
 
 router.get('/cars', function(req, res, next) {
-  pg.connect('postgres://localhost:5432/nima', function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
 
     client
@@ -29,7 +31,7 @@ router.get('/cars', function(req, res, next) {
 router.post('/cars', function(req, res, next) {
   const data = req.body
   const newCarData = [data.make, data.model, data.year]
-  pg.connect('postgres://localhost:5432/nima', function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
 
     client
@@ -47,7 +49,7 @@ router.post('/cars', function(req, res, next) {
 
 
 router.get('/prices', function(req, res, next) {
-  pg.connect('postgres://localhost:5432/nima', function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if (err) throw err;
 
     client

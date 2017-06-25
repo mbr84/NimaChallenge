@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS nima;
-CREATE DATABASE nima;
-
-\c nima;
 
 CREATE TABLE cars (
   id SERIAL PRIMARY KEY,
