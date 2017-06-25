@@ -144,6 +144,10 @@ img {
 }
 
 @media(max-width: 511px) {
+  .chart-container {
+    width: 90vw;
+  }
+
   body {
     margin: 12px;
   }

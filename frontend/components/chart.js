@@ -9,7 +9,12 @@ const chartView = state => {
   let chartNode;
   if (state.get('data').size === 0) {
     chartNode = div({
-      style: {verticalAlign: 'center', textAlign: 'center'},
+      style: {
+        verticalAlign: 'center',
+        textAlign: 'center',
+        padding: '100px 0 124px 0',
+        fontSize: 24px
+      },
       inner: "Sorry, there's no data available for this car"
     })
   } else {
