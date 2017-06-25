@@ -6,6 +6,7 @@ const chartView = state => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
+  const text = state.get('data') === 0 ? "Sorry, there's no data available for this car" : ""
   if (show) renderChart(state)
 
   return div({
@@ -36,7 +37,7 @@ const chartView = state => {
         div({
           style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
           inner: [
-          div({}),
+          div({inner: text}),
           i({
             selector: ".material-icons",
             inner: "close",
