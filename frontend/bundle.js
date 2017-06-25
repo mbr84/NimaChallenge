@@ -65812,7 +65812,7 @@ var chartView = function chartView(state) {
   var opacity = show ? "1" : "0";
   var chartNode = void 0;
   if (state.get('data').size === 0) {
-    chartNode = d({
+    chartNode = (0, _snabbdomHelpers.div)({
       style: { verticalAlign: 'center', textAlign: 'center' },
       inner: "Sorry, there's no data available for this car"
     });

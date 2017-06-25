@@ -8,7 +8,7 @@ const chartView = state => {
   const opacity = show ? "1" : "0"
   let chartNode;
   if (state.get('data').size === 0) {
-    chartNode = d({
+    chartNode = div({
       style: {verticalAlign: 'center', textAlign: 'center'},
       inner: "Sorry, there's no data available for this car"
     })
