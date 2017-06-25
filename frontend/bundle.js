@@ -65751,7 +65751,7 @@ var carRequestStreams = function carRequestStreams() {
     };
   });
 
-  var requestStream = addCarClickStream.mapTo('http://localhost:3000/cars');
+  var requestStream = addCarClickStream.mapTo('https://nima-challenge.herokuapp.com/cars');
 
   var responseStream = requestStream.flatMap(function (requestUrl) {
     return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax({
@@ -65767,7 +65767,7 @@ var carRequestStreams = function carRequestStreams() {
 
   // stream of responses to POSTs to /cars -> stream of GET requests to /cars
   var refreshCarsStream = responseStream.startWith('initial GET cars request').flatMap(function () {
-    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax('http://localhost:3000/cars'));
+    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax('https://nima-challenge.herokuapp.com/cars'));
   }).map(function (res) {
     return function (state) {
       return (// stream of GET requests to /cars -> stream of fn's updating state
@@ -78665,7 +78665,7 @@ var chartStateStreams = function chartStateStreams() {
   var chartDataRequests = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').switchMap(function () {
     return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
   }).map(function (e) {
-    return 'http://localhost:3000/prices?id=' + e.currentTarget.id;
+    return 'https://nima-challenge.herokuapp.com/prices?id=' + e.currentTarget.id;
   }).switchMap(function (url) {
     return _jquery2.default.ajax(url);
   }).map(function (res) {

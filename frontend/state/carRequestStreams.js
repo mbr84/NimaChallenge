@@ -16,7 +16,7 @@ const carRequestStreams = () => {
   const requestingStream = addCarClickStream.share()
     .map(() => state => state.set('isAdding', true))
 
-  const requestStream = addCarClickStream.mapTo('http://localhost:3000/cars')
+  const requestStream = addCarClickStream.mapTo('https://nima-challenge.herokuapp.com/cars')
 
   const responseStream = requestStream.flatMap(requestUrl =>
     Rx.Observable.fromPromise($.ajax({
@@ -33,7 +33,7 @@ const carRequestStreams = () => {
   // stream of responses to POSTs to /cars -> stream of GET requests to /cars
   const refreshCarsStream = responseStream
     .startWith('initial GET cars request')
-    .flatMap(() => Rx.Observable.fromPromise($.ajax('http://localhost:3000/cars')))
+    .flatMap(() => Rx.Observable.fromPromise($.ajax('https://nima-challenge.herokuapp.com/cars')))
     .map(res => state =>  // stream of GET requests to /cars -> stream of fn's updating state
       state.set('cars', new List(res.data))
         .set('isAdding', false)
