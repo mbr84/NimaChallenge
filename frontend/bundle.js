@@ -78666,7 +78666,7 @@ var chartStateStreams = function chartStateStreams() {
     return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
   }).map(function (e) {
     return 'http://localhost:3000/prices?id=' + e.currentTarget.id;
-  }).distinctUntilChanged().auditTime(50).switchMap(function (url) {
+  }).switchMap(function (url) {
     return _jquery2.default.ajax(url);
   }).map(function (res) {
     return function (state) {

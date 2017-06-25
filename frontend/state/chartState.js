@@ -17,8 +17,6 @@ const chartStateStreams = () => {
   const chartDataRequests = Rx.Observable.fromEvent($('table'), 'mouseenter')
     .switchMap(() => Rx.Observable.fromEvent($('img'), 'click'))
     .map(e => `http://localhost:3000/prices?id=${e.currentTarget.id}`)
-    .distinctUntilChanged()
-    .auditTime(50)
     .switchMap(url => $.ajax(url))
     .map(res => state =>
       state.setIn(['chart', 'data'], new List(res.data)).setIn(['chart', 'show'], true))
