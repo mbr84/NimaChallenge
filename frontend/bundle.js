@@ -65816,13 +65816,13 @@ var chartView = function chartView(state) {
     selector: '.modal-outer',
     style: {
       opacity: opacity,
+      visibility: visibility,
       backgroundColor: 'rgba(0, 0, 0, .5)',
       position: 'fixed',
       top: '0',
       left: '0',
       height: '100vh',
-      width: '100vw',
-      visibility: visibility
+      width: '100vw'
     },
     on: { click: state.get('toggleChart') },
     inner: (0, _snabbdomHelpers.div)({
@@ -65838,6 +65838,12 @@ var chartView = function chartView(state) {
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
+        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
+          selector: ".material-icons",
+          inner: "close",
+          style: { cursor: 'pointer' },
+          on: { click: state.get('toggleChart') }
+        })] }), (0, _snabbdomHelpers.div)({
         inner: (0, _snabbdomHelpers.canvas)({
           selector: '#myChart',
           style: {

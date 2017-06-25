@@ -12,13 +12,13 @@ const chartView = state => {
     selector: '.modal-outer',
     style: {
       opacity,
+      visibility,
       backgroundColor: 'rgba(0, 0, 0, .5)',
       position: 'fixed',
       top: '0',
       left: '0',
       height: '100vh',
       width: '100vw',
-      visibility: visibility
     },
     on: { click: state.get('toggleChart')},
     inner: div({
@@ -35,6 +35,16 @@ const chartView = state => {
       inner: [
         div({
           style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
+          inner: [
+          div({}),
+          i({
+            selector: ".material-icons",
+            inner: "close",
+            style: { cursor: 'pointer' },
+            on: { click: state.get('toggleChart') }
+          })
+        ]}),
+        div({
           inner: canvas({
             selector: '#myChart',
             style: {
