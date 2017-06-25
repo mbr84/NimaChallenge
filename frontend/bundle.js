@@ -65810,7 +65810,7 @@ var chartView = function chartView(state) {
   var show = state.get('show');
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
-  var text = state.get('data') === 0 ? "Sorry, there's no data available for this car" : "";
+  var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
   if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
