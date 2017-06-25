@@ -65808,19 +65808,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var chartView = function chartView(state) {
   var show = state.get('show');
-  var visibility = void 0,
-      opacity = void 0,
-      backgroundColor = void 0;
-  if (show) {
-    visibility = 'visible';
-    opacity = '1';
-    backgroundColor = 'white';
-    (0, _utils.renderChart)(state);
-  } else {
-    visibility = 'hidden';
-    opacity = '0';
-    backgroundColor = 'rgba(0,0,0, .5)';
-  }
+  var visibility = show ? "visible" : "hidden";
+  var opacity = show ? "1" : "0";
+  if (show) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',
@@ -65843,19 +65833,13 @@ var chartView = function chartView(state) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         visibility: visibility,
-        backgroundColor: backgroundColor,
+        backgroundColor: 'white',
         padding: '10px',
         boxSizing: 'border-box',
-        opacity: 1
+        opacity: opacity
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
-        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
-          selector: ".material-icons",
-          inner: "close",
-          style: { cursor: 'pointer' },
-          on: { click: state.get('toggleChart') }
-        })] }), (0, _snabbdomHelpers.div)({
         inner: (0, _snabbdomHelpers.canvas)({
           selector: '#myChart',
           style: {
