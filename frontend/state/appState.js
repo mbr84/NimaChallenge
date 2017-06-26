@@ -19,22 +19,13 @@ const initializeAppState = () => {
     currentPage: window.localStorage.getItem('currentPage') || 0
   })
 
-  const {
-    formSubmissionStream,
-    inputRequiredStream,
-    requestStreams
-  } = carRequestStreams()
-
-  formSubmissionStream.forEach(e => e.preventDefault())
-  inputRequiredStream.forEach(e => $(e.currentTarget).attr('required', true))
-
+  const requestStreams = carRequestStreams()
 
   return Rx.Observable.merge(
     chartStreams,
     Nav.streams,
     requestStreams
-  )
-  .scan((state, stateChangeFn) => stateChangeFn(state), initialState)
+  ).scan((state, stateChangeFn) => stateChangeFn(state), initialState)
 }
 
 export default initializeAppState

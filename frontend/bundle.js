@@ -51560,9 +51560,9 @@ var _tableNavigation = __webpack_require__(825);
 
 var Nav = _interopRequireWildcard(_tableNavigation);
 
-var _carRequestStreams2 = __webpack_require__(827);
+var _carRequestStreams = __webpack_require__(827);
 
-var _carRequestStreams3 = _interopRequireDefault(_carRequestStreams2);
+var _carRequestStreams2 = _interopRequireDefault(_carRequestStreams);
 
 var _chartState = __webpack_require__(878);
 
@@ -51587,17 +51587,7 @@ var initializeAppState = function initializeAppState() {
     currentPage: window.localStorage.getItem('currentPage') || 0
   });
 
-  var _carRequestStreams = (0, _carRequestStreams3.default)(),
-      formSubmissionStream = _carRequestStreams.formSubmissionStream,
-      inputRequiredStream = _carRequestStreams.inputRequiredStream,
-      requestStreams = _carRequestStreams.requestStreams;
-
-  formSubmissionStream.forEach(function (e) {
-    return e.preventDefault();
-  });
-  inputRequiredStream.forEach(function (e) {
-    return (0, _jquery2.default)(e.currentTarget).attr('required', true);
-  });
+  var requestStreams = (0, _carRequestStreams2.default)();
 
   return _rxjs2.default.Observable.merge(chartStreams, Nav.streams, requestStreams).scan(function (state, stateChangeFn) {
     return stateChangeFn(state);
@@ -65738,11 +65728,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var carRequestStreams = function carRequestStreams() {
 
   var addCarClickStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('form'), 'submit');
-  var formSubmissionStream = addCarClickStream.share();
+  var formSubmissionStream = addCarClickStream.share().forEach(function (e) {
+    return e.preventDefault();
+  });
 
   // Don't start validating input fields until they've been focused and unfocused
   var inputBlurStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('input'), 'blur');
-  var inputRequiredStream = inputBlurStream.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)('button'), 'mousedown'));
+  var inputRequiredStream = inputBlurStream.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)('button'), 'mousedown')).forEach(function (e) {
+    return (0, _jquery2.default)(e.currentTarget).attr('required', true);
+  });
 
   // stream of submit button clicks -> stream of functions to change state.isAdding to true
   var requestingStream = addCarClickStream.share().map(function () {
@@ -65776,11 +65770,7 @@ var carRequestStreams = function carRequestStreams() {
     };
   });
 
-  return {
-    formSubmissionStream: formSubmissionStream,
-    inputRequiredStream: inputRequiredStream,
-    requestStreams: _rxjs2.default.Observable.merge(refreshCarsStream, requestingStream)
-  };
+  return _rxjs2.default.Observable.merge(refreshCarsStream, requestingStream);
 };
 
 exports.default = carRequestStreams;

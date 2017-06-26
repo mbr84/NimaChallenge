@@ -6,11 +6,13 @@ const carRequestStreams = () => {
 
   const addCarClickStream = Rx.Observable.fromEvent($('form'), 'submit')
   const formSubmissionStream = addCarClickStream.share()
+    .forEach(e => e.preventDefault())
 
   // Don't start validating input fields until they've been focused and unfocused
   const inputBlurStream = Rx.Observable.fromEvent($('input'), 'blur')
   const inputRequiredStream = inputBlurStream
     .merge(Rx.Observable.fromEvent($('button'), 'mousedown'))
+    .forEach(e => $(e.currentTarget).attr('required', true))
 
   // stream of submit button clicks -> stream of functions to change state.isAdding to true
   const requestingStream = addCarClickStream.share()
@@ -39,11 +41,7 @@ const carRequestStreams = () => {
         .set('isAdding', false)
         .set('totalPages', Math.floor(res.data.length / 15)))
 
-  return {
-    formSubmissionStream,
-    inputRequiredStream,
-    requestStreams: Rx.Observable.merge(refreshCarsStream, requestingStream)
-  }
+  return Rx.Observable.merge(refreshCarsStream, requestingStream)
 }
 
 export default carRequestStreams
