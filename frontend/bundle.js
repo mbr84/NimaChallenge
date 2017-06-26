@@ -65698,7 +65698,6 @@ var renderChart = exports.renderChart = function renderChart(state) {
     return el.price;
   }));
 
-  (0, _jquery2.default)('#myChart').siblings().remove();
   new _chart2.default((0, _jquery2.default)('#myChart'), config(data, years));
 };
 
@@ -65806,6 +65805,7 @@ var chartView = function chartView(state) {
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
   var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
+  (0, _jquery2.default)('#myChart').siblings().remove();
   if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({

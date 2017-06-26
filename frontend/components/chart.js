@@ -7,6 +7,7 @@ const chartView = state => {
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
   const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
+  $('#myChart').siblings().remove()
   if (show && state.get('data').size > 0) renderChart(state)
 
   return div({

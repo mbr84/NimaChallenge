@@ -50,6 +50,5 @@ export const renderChart = state => {
   const years = Array.from(dedupedData.map(el => el.year))
   const data = Array.from(dedupedData.map(el => el.price))
 
-  $('#myChart').siblings().remove()
   new Chart($('#myChart'), config(data, years))
 }
