@@ -65806,9 +65806,12 @@ var chartView = function chartView(state) {
   var opacity = show ? "1" : "0";
   var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
   var chartRoot = (0, _jquery2.default)('#myChart').parent();
-  chartRoot.children().remove();
-  chartRoot.append('<canvas id="myChart"></canvas>');
-  if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
+
+  if (state.get('data').size > 0) {
+    chartRoot.children().remove();
+    chartRoot.append('<canvas id="myChart"></canvas>');
+    if (show) (0, _utils.renderChart)(state);
+  }
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',
