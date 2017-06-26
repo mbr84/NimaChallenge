@@ -11,8 +11,12 @@ const carRequestStreams = () => {
   // Don't start validating input fields until they've been focused and unfocused
   const inputBlurStream = Rx.Observable.fromEvent($('input'), 'blur')
   const inputRequiredStream = inputBlurStream
-    .merge(Rx.Observable.fromEvent($('button'), 'mousedown'))
-    .forEach(e => $(e.currentTarget).attr('required', true))
+    .merge(
+      Rx.Observable.fromEvent($('button'), 'mousedown'),
+      Rx.Observable.fromEvent($('input'), 'keydown')
+        .filter(e => e.which === 13)
+    )
+      .forEach(e => $(e.currentTarget).parent().children().attr('required', true))
 
   // stream of submit button clicks -> stream of functions to change state.isAdding to true
   const requestingStream = addCarClickStream.share()

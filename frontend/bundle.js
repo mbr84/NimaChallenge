@@ -65734,8 +65734,10 @@ var carRequestStreams = function carRequestStreams() {
 
   // Don't start validating input fields until they've been focused and unfocused
   var inputBlurStream = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('input'), 'blur');
-  var inputRequiredStream = inputBlurStream.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)('button'), 'mousedown')).forEach(function (e) {
-    return (0, _jquery2.default)(e.currentTarget).attr('required', true);
+  var inputRequiredStream = inputBlurStream.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)('button'), 'mousedown'), _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('input'), 'keydown').filter(function (e) {
+    return e.which === 13;
+  })).forEach(function (e) {
+    return (0, _jquery2.default)(e.currentTarget).parent().children().attr('required', true);
   });
 
   // stream of submit button clicks -> stream of functions to change state.isAdding to true
