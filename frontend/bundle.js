@@ -65805,7 +65805,7 @@ var chartView = function chartView(state) {
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
   var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
-  (0, _jquery2.default)('#myChart').siblings().remove();
+  (0, _jquery2.default)('#myChart').parent().childrend().remove();
   if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
