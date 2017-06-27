@@ -28201,7 +28201,7 @@ var config = exports.config = function config(data, years) {
   };
 };
 
-var cleanData = function cleanData(data) {
+var cleanData = function cleanData(state) {
   var uniqueYears = new Set();
   return state.get('data').filter(function (el) {
     var isFirstOfYear = !uniqueYears.has(el.year);

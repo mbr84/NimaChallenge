@@ -40,7 +40,7 @@ export const config = (data, years) => ({
   }
 });
 
-const cleanData = data => {
+const cleanData = state => {
   const uniqueYears = new Set()
   return state.get('data').filter(el => {
     const isFirstOfYear = !uniqueYears.has(el.year)
