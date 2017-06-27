@@ -65808,7 +65808,7 @@ var chartView = function chartView(state) {
   var textPadding = state.get('data').size === 0 ? "17%" : "0";
   var chartRoot = (0, _jquery2.default)('#myChart').parent();
   chartRoot.children().remove();
-  chartRoot.append('<canvas id="myChart"></canvas>');
+  chartRoot.append('<div class="no-data"></div><canvas id="myChart"></canvas>');
   if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
