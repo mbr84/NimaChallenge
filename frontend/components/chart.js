@@ -8,12 +8,9 @@ const chartView = state => {
   const opacity = show ? "1" : "0"
   const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
   const chartRoot = $('#myChart').parent()
-
-  if (state.get('data').size > 0) {
-    chartRoot.children().remove()
-    chartRoot.append('<canvas id="myChart"></canvas>')
-    if (show) renderChart(state)
-  }
+  chartRoot.children().remove()
+  chartRoot.append('<canvas id="myChart"></canvas>')
+  if (show && state.get('data').size > 0) renderChart(state)
 
   return div({
     selector: '.modal-outer',
