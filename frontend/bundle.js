@@ -78513,7 +78513,7 @@ exports.AnimationFrameScheduler = AnimationFrameScheduler;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.lastPage = exports.streams = exports.nextPage = undefined;
+exports.streams = exports.lastPage = exports.nextPage = undefined;
 
 var _rxjs = __webpack_require__(70);
 
@@ -78523,34 +78523,31 @@ var _utils = __webpack_require__(167);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var nextPageSubject = new _rxjs2.default.Subject();
-
-var nextPageClickStream = nextPageSubject.map(function () {
+var changePage = function changePage(delta) {
   return function (state) {
-    var newPage = +state.get('currentPage') + 1;
+    var newPage = +state.get('currentPage') + delta;
     (0, _utils.localStorageAsync)(newPage);
     return state.set('currentPage', newPage);
   };
-});
+};
 
+var nextPageSubject = new _rxjs2.default.Subject();
+var nextPageClickStream = nextPageSubject.map(function () {
+  return changePage(1);
+});
 var nextPage = exports.nextPage = function nextPage() {
   return nextPageSubject.next();
 };
 
 var lastPageSubject = new _rxjs2.default.Subject();
-
 var lastPageClickStream = lastPageSubject.map(function () {
-  return function (state) {
-    var newPage = state.get('currentPage') - 1;
-    (0, _utils.localStorageAsync)(newPage);
-    return state.set('currentPage', newPage);
-  };
+  return changePage(-1);
 });
-
-var streams = exports.streams = _rxjs2.default.Observable.merge(nextPageClickStream, lastPageClickStream);
 var lastPage = exports.lastPage = function lastPage() {
   return lastPageSubject.next();
 };
+
+var streams = exports.streams = _rxjs2.default.Observable.merge(nextPageClickStream, lastPageClickStream);
 
 /***/ }),
 /* 877 */
