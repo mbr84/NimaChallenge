@@ -28228,7 +28228,7 @@ var renderChart = function renderChart(data) {
 
 var renderCanvas = exports.renderCanvas = function renderCanvas(state) {
   cleanCanvas();
-  if (state.get('show')) renderChart(cleanData(state));
+  if (state.get('show') && state.get('data').size > 0) renderChart(cleanData(state));
 };
 
 /***/ }),

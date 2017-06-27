@@ -63,5 +63,5 @@ const renderChart = data => {
 
 export const renderCanvas = state => {
   cleanCanvas()
-  if (state.get('show')) renderChart(cleanData(state))
+  if (state.get('show') && state.get('data').size > 0) renderChart(cleanData(state))
 }
