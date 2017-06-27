@@ -65808,7 +65808,7 @@ var chartView = function chartView(state) {
   var textPadding = state.get('data').size === 0 ? "17%" : "0";
   var chartRoot = (0, _jquery2.default)('#myChart').parent();
   chartRoot.children().remove();
-  chartRoot.append('<div class="no-data"></div><canvas id="myChart"></canvas>');
+  chartRoot.append('<canvas id="myChart"></canvas>');
   if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
 
   return (0, _snabbdomHelpers.div)({
@@ -65843,14 +65843,14 @@ var chartView = function chartView(state) {
           style: { cursor: 'pointer' },
           on: { click: state.get('toggleChart') }
         })] }), (0, _snabbdomHelpers.div)({
-        inner: [(0, _snabbdomHelpers.div)({
-          selector: '.no-data',
-          style: {
-            color: '#e0475c',
-            paddingTop: textPadding
-          },
-          inner: text
-        }), (0, _snabbdomHelpers.canvas)({
+        selector: '.no-data',
+        style: {
+          color: '#e0475c',
+          paddingTop: textPadding
+        },
+        inner: text
+      }), (0, _snabbdomHelpers.div)({
+        inner: [(0, _snabbdomHelpers.canvas)({
           selector: '#myChart',
           style: {
             backgroundColor: 'white'

@@ -10,7 +10,7 @@ const chartView = state => {
   const textPadding = state.get('data').size === 0 ? "17%" : "0"
   const chartRoot = $('#myChart').parent()
   chartRoot.children().remove()
-  chartRoot.append('<div class="no-data"></div><canvas id="myChart"></canvas>')
+  chartRoot.append('<canvas id="myChart"></canvas>')
   if (show && state.get('data').size > 0) renderChart(state)
 
 
@@ -51,19 +51,19 @@ const chartView = state => {
             })
           ]}),
           div({
+            selector: '.no-data',
+            style: {
+              color: '#e0475c',
+              paddingTop: textPadding
+            },
+            inner: text
+          }),
+          div({
             inner: [
-              div({
-                selector: '.no-data',
-                style: {
-                  color: '#e0475c',
-                  paddingTop: textPadding
-                },
-                inner: text
-              }),
               canvas({
               selector: '#myChart',
               style: {
-                backgroundColor: 'white'
+                backgroundColor: 'white',
               }
             })]
           })
