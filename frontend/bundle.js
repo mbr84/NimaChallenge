@@ -28145,7 +28145,7 @@ module.exports = _curry2(function where(spec, testObj) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderChart = exports.config = exports.localStorageAsync = undefined;
+exports.renderCanvas = exports.config = exports.localStorageAsync = undefined;
 
 var _chart = __webpack_require__(543);
 
@@ -28201,21 +28201,34 @@ var config = exports.config = function config(data, years) {
   };
 };
 
-var renderChart = exports.renderChart = function renderChart(state) {
+var cleanData = function cleanData(data) {
   var uniqueYears = new Set();
-  var dedupedData = state.get('data').filter(function (el) {
+  return state.get('data').filter(function (el) {
     var isFirstOfYear = !uniqueYears.has(el.year);
     uniqueYears.add(el.year);
     return isFirstOfYear;
   });
-  var years = Array.from(dedupedData.map(function (el) {
+};
+
+var cleanCanvas = function cleanCanvas() {
+  var chartRoot = (0, _jquery2.default)('#myChart').parent();
+  chartRoot.children().remove();
+  chartRoot.append('<canvas id="myChart"></canvas>');
+};
+var renderChart = function renderChart(data) {
+  var years = Array.from(data.map(function (el) {
     return el.year;
   }));
-  var data = Array.from(dedupedData.map(function (el) {
+  var prices = Array.from(data.map(function (el) {
     return el.price;
   }));
 
-  new _chart2.default((0, _jquery2.default)('#myChart'), config(data, years));
+  new _chart2.default((0, _jquery2.default)('#myChart'), config(prices, years));
+};
+
+var renderCanvas = exports.renderCanvas = function renderCanvas(state) {
+  cleanCanvas();
+  if (state.get('show')) renderChart(cleanData(state));
 };
 
 /***/ }),
@@ -51389,10 +51402,8 @@ var chartView = function chartView(state) {
   var opacity = show ? "1" : "0";
   var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
   var textPadding = state.get('data').size === 0 ? "17%" : "0";
-  var chartRoot = (0, _jquery2.default)('#myChart').parent();
-  chartRoot.children().remove();
-  chartRoot.append('<canvas id="myChart"></canvas>');
-  if (show && state.get('data').size > 0) (0, _utils.renderChart)(state);
+
+  (0, _utils.renderCanvas)(state);
 
   return (0, _snabbdomHelpers.div)({
     selector: '.modal-outer',

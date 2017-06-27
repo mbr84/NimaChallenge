@@ -40,15 +40,28 @@ export const config = (data, years) => ({
   }
 });
 
-export const renderChart = state => {
+const cleanData = data => {
   const uniqueYears = new Set()
-  const dedupedData = state.get('data').filter(el => {
+  return state.get('data').filter(el => {
     const isFirstOfYear = !uniqueYears.has(el.year)
     uniqueYears.add(el.year)
     return isFirstOfYear
   })
-  const years = Array.from(dedupedData.map(el => el.year))
-  const data = Array.from(dedupedData.map(el => el.price))
+}
 
-  new Chart($('#myChart'), config(data, years))
+const cleanCanvas = () => {
+  const chartRoot = $('#myChart').parent()
+  chartRoot.children().remove()
+  chartRoot.append('<canvas id="myChart"></canvas>')
+}
+const renderChart = data => {
+  const years = Array.from(data.map(el => el.year))
+  const prices = Array.from(data.map(el => el.price))
+
+  new Chart($('#myChart'), config(prices, years))
+}
+
+export const renderCanvas = state => {
+  cleanCanvas()
+  if (state.get('show')) renderChart(cleanData(state))
 }
