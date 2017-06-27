@@ -6,7 +6,12 @@ const chartView = state => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
-  const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
+  let text = ""
+  let textPadding = "0";
+  if (state.get('data').size === 0) {
+    text = "Sorry, there's no data available for this car"
+    textPadding = "17%"
+  }
   const chartRoot = $('#myChart').parent()
   chartRoot.children().remove()
   chartRoot.append('<canvas id="myChart"></canvas>')
@@ -40,7 +45,7 @@ const chartView = state => {
         div({
           style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
           inner: [
-          div({style: { color: '#e0475c'}, inner: text}),
+          div({}),
           i({
             selector: ".material-icons",
             inner: "close",
@@ -49,12 +54,14 @@ const chartView = state => {
           })
         ]}),
         div({
-          inner: canvas({
+          inner: [
+            div({style: { color: '#e0475c', paddingTop: textPadding }, inner: text}),
+            canvas({
             selector: '#myChart',
             style: {
               backgroundColor: 'white'
             }
-          })
+          })]
         })
 
       ]

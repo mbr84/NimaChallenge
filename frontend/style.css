@@ -136,6 +136,13 @@ input[type=number]::-webkit-outer-spin-button {
   width: 70vw;
 }
 
+.no-data {
+  color: rgb(224, 71, 92);
+  font-size: 1.75em;
+  max-width: 524px;
+  margin: auto;
+}
+
 .chart-container, .modal-outer {
   transition: all .5s;
 }

@@ -65804,7 +65804,12 @@ var chartView = function chartView(state) {
   var show = state.get('show');
   var visibility = show ? "visible" : "hidden";
   var opacity = show ? "1" : "0";
-  var text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : "";
+  var text = "";
+  var textPadding = "0";
+  if (state.get('data').size === 0) {
+    text = "Sorry, there's no data available for this car";
+    textPadding = "17%";
+  }
   var chartRoot = (0, _jquery2.default)('#myChart').parent();
   chartRoot.children().remove();
   chartRoot.append('<canvas id="myChart"></canvas>');
@@ -65836,18 +65841,18 @@ var chartView = function chartView(state) {
       },
       inner: [(0, _snabbdomHelpers.div)({
         style: { display: 'flex', justifyContent: "space-between", padding: '5px' },
-        inner: [(0, _snabbdomHelpers.div)({ style: { color: '#e0475c' }, inner: text }), (0, _snabbdomHelpers.i)({
+        inner: [(0, _snabbdomHelpers.div)({}), (0, _snabbdomHelpers.i)({
           selector: ".material-icons",
           inner: "close",
           style: { cursor: 'pointer' },
           on: { click: state.get('toggleChart') }
         })] }), (0, _snabbdomHelpers.div)({
-        inner: (0, _snabbdomHelpers.canvas)({
+        inner: [(0, _snabbdomHelpers.div)({ style: { color: '#e0475c', paddingTop: textPadding }, inner: text }), (0, _snabbdomHelpers.canvas)({
           selector: '#myChart',
           style: {
             backgroundColor: 'white'
           }
-        })
+        })]
       })]
     })
   });
