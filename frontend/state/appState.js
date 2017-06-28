@@ -10,13 +10,12 @@ const initializeAppState = () => {
   const { chartStreams, toggleChart } = chartStateStreams()
 
   const initialState = new Map({
-    nextPage: Nav.nextPage,
-    lastPage: Nav.lastPage,
-    totalPages: 0,
+    pageNavActions: { nextPage: Nav.nextPage, lastPage: Nav.lastPage },
     isAdding: false,
+    totalPages: 0,
+    currentPage: window.localStorage.getItem('currentPage') || 0,
     cars: new List(),
     chart: new Map({ show: false, data: new List(),  toggleChart }),
-    currentPage: window.localStorage.getItem('currentPage') || 0
   })
 
   const requestStreams = carRequestStreams()
