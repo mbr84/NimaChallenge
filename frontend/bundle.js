@@ -78677,8 +78677,8 @@ var chartStateStreams = function chartStateStreams() {
 
   var chartDataRequests = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').switchMap(function () {
     return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
-  }).map(function (e) {
-    return _jquery2.default.ajax('https://nima-challenge.herokuapp.com/prices?id=' + e.currentTarget.id);
+  }).flatMap(function (e) {
+    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax('https://nima-challenge.herokuapp.com/prices?id=' + e.currentTarget.id));
   }).map(function (res) {
     return function (state) {
       return state.setIn(['chart', 'data'], new _immutable.List(res.data)).setIn(['chart', 'show'], true);

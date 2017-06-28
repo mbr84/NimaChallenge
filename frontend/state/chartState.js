@@ -16,7 +16,7 @@ const chartStateStreams = () => {
 
   const chartDataRequests = Rx.Observable.fromEvent($('table'), 'mouseenter')
     .switchMap(() => Rx.Observable.fromEvent($('img'), 'click'))
-    .map(e => $.ajax(`https://nima-challenge.herokuapp.com/prices?id=${e.currentTarget.id}`))
+    .flatMap(e => Rx.Observable.fromPromise($.ajax(`https://nima-challenge.herokuapp.com/prices?id=${e.currentTarget.id}`)))
     .map(res => state =>
       state.setIn(['chart', 'data'], new List(res.data)).setIn(['chart', 'show'], true))
 
