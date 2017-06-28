@@ -4,6 +4,8 @@ import $ from 'jquery';
 export const localStorageAsync = (page) =>
   setTimeout(() => window.localStorage.setItem('currentPage', page), 0)
 
+export const priceUrl = carId => `https://nima-challenge.herokuapp.com/prices?id=${carId}`
+
 export const config = (data, years) => ({
   type: 'line',
   data: {

@@ -40033,7 +40033,7 @@ exports.default = chartView;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderCanvas = exports.config = exports.localStorageAsync = undefined;
+exports.renderCanvas = exports.config = exports.priceUrl = exports.localStorageAsync = undefined;
 
 var _chart = __webpack_require__(472);
 
@@ -40049,6 +40049,10 @@ var localStorageAsync = exports.localStorageAsync = function localStorageAsync(p
   return setTimeout(function () {
     return window.localStorage.setItem('currentPage', page);
   }, 0);
+};
+
+var priceUrl = exports.priceUrl = function priceUrl(carId) {
+  return 'https://nima-challenge.herokuapp.com/prices?id=' + carId;
 };
 
 var config = exports.config = function config(data, years) {
@@ -78658,6 +78662,8 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 var _immutable = __webpack_require__(526);
 
+var _utils = __webpack_require__(471);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var chartStateStreams = function chartStateStreams() {
@@ -78678,7 +78684,7 @@ var chartStateStreams = function chartStateStreams() {
   var chartDataRequests = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').switchMap(function () {
     return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
   }).flatMap(function (e) {
-    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax('https://nima-challenge.herokuapp.com/prices?id=' + e.currentTarget.id));
+    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(e.currentTarget.id)));
   }).map(function (res) {
     return function (state) {
       return state.setIn(['chart', 'data'], new _immutable.List(res.data)).setIn(['chart', 'show'], true);
