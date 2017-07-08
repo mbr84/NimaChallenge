@@ -1,11 +1,11 @@
 import { tr, th, td, table, thead } from 'snabbdom-helpers';
 import carRow from './carRow'
 
-const carsView = state => {
+const carsView = (state, actions) => {
   const currentPage = +state.get('currentPage')
   const cars = state.get('cars')
     .slice(currentPage * 15, (currentPage + 1) * 15)
-    .map((car, i) => carRow(car))
+    .map((car, i) => carRow(car, actions))
 
   return table({
     inner: [

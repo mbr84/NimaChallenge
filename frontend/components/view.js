@@ -9,7 +9,7 @@ const view = (state, actions) =>
     inner: [
       h1({inner: "Your Car Lot"}),
       addCarForm(state.get('isAdding')),
-      carList(state),
+      carList(state, actions),
       navButtons(state, actions),
       chartView(state.get('chart'), actions)
     ]

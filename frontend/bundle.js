@@ -43143,7 +43143,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var view = function view(state, actions) {
   return (0, _snabbdomHelpers.main)({
-    inner: [(0, _snabbdomHelpers.h1)({ inner: "Your Car Lot" }), (0, _addCarForm2.default)(state.get('isAdding')), (0, _carList2.default)(state), (0, _tableNav2.default)(state, actions), (0, _chart2.default)(state.get('chart'), actions)]
+    inner: [(0, _snabbdomHelpers.h1)({ inner: "Your Car Lot" }), (0, _addCarForm2.default)(state.get('isAdding')), (0, _carList2.default)(state, actions), (0, _tableNav2.default)(state, actions), (0, _chart2.default)(state.get('chart'), actions)]
   });
 };
 
@@ -51290,10 +51290,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var carsView = function carsView(state) {
+var carsView = function carsView(state, actions) {
   var currentPage = +state.get('currentPage');
   var cars = state.get('cars').slice(currentPage * 15, (currentPage + 1) * 15).map(function (car, i) {
-    return (0, _carRow2.default)(car);
+    return (0, _carRow2.default)(car, actions);
   });
 
   return (0, _snabbdomHelpers.table)({
@@ -51323,11 +51323,11 @@ var _h2 = _interopRequireDefault(_h);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var carRow = function carRow(car) {
+var carRow = function carRow(car, actions) {
   return (0, _snabbdomHelpers.tr)({
     inner: [(0, _snabbdomHelpers.td)({ inner: car.make }), (0, _snabbdomHelpers.td)({ inner: car.model }), (0, _snabbdomHelpers.td)({ inner: car.year }), (0, _snabbdomHelpers.td)({
       selector: ".price-cell",
-      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png", id: car.id } })
+      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png", id: car.id }, on: { click: actions.toggleChart.bind(null, car.id) } })
     })]
   });
 };
@@ -78679,7 +78679,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var chartState = function chartState() {
   var toggleChartSubject = new _rxjs2.default.Subject();
 
-  var toggleChartStream = toggleChartSubject.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
+  var toggleChartStream = toggleChartSubject.do(function (el) {
+    return console.log(el);
+  }).merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
     return e.which === 27;
   })).map(function () {
     return function (state) {
@@ -78687,10 +78689,10 @@ var chartState = function chartState() {
     };
   });
 
-  var chartDataRequests = _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('table'), 'mouseenter').switchMap(function () {
-    return _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('img'), 'click');
-  }).flatMap(function (e) {
-    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(e.currentTarget.id)));
+  var chartDataRequests = toggleChartSubject /*Rx.Observable.fromEvent($('table'), 'mouseenter')
+                                             .switchMap(() => Rx.Observable.fromEvent($('img'), 'click'))*/
+  .flatMap(function (id) {
+    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(id)));
   }).map(function (res) {
     return function (state) {
       return state.setIn(['chart', 'data'], new _immutable.List(res.data)).setIn(['chart', 'show'], true);
@@ -78702,8 +78704,8 @@ var chartState = function chartState() {
   });
 
   return {
-    toggleChart: function toggleChart() {
-      return toggleChartSubject.next();
+    toggleChart: function toggleChart(id) {
+      return toggleChartSubject.next(id);
     },
     chartStreams: _rxjs2.default.Observable.merge(toggleChartStream, chartDataRequests)
   };
