@@ -42621,7 +42621,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById('list-root');
   var initialState = new _immutable.Map({
-    pageNavActions: {},
     isAdding: false,
     cars: new _immutable.List(),
     currentPage: 0,
