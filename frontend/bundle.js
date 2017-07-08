@@ -78659,7 +78659,7 @@ exports.default = carRequestStreams;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _rxjs = __webpack_require__(70);
@@ -78677,38 +78677,36 @@ var _utils = __webpack_require__(103);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var chartState = function chartState() {
-  var toggleChartSubject = new _rxjs2.default.Subject();
+    var toggleChartSubject = new _rxjs2.default.Subject();
 
-  var toggleChartStream = toggleChartSubject.do(function (el) {
-    return console.log(el);
-  }).merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
-    return e.which === 27;
-  })).map(function () {
-    return function (state) {
-      return state.setIn(['chart', 'show'], !state.getIn(['chart'], 'show'));
+    var toggleChartOff$ = toggleChartSubject.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
+        return e.which === 27;
+    })).map(function () {
+        return function (state) {
+            return state.setIn(['chart', 'show'], !state.getIn(['chart'], 'show'));
+        };
+    });
+
+    var chartDataRequests = toggleChartSubject.filter(function (data) {
+        return typeof data === "number";
+    }).flatMap(function (id) {
+        return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(id)));
+    }).map(function (res) {
+        return function (state) {
+            return state.setIn(['chart', 'data'], new _immutable.List(res.data)).setIn(['chart', 'show'], true);
+        };
+    });
+
+    _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('.chart-container'), 'click').forEach(function (e) {
+        return e.stopPropagation();
+    });
+
+    return {
+        toggleChart: function toggleChart(id) {
+            return toggleChartSubject.next(id);
+        },
+        chartStreams: _rxjs2.default.Observable.merge(toggleChartStream, chartDataRequests)
     };
-  });
-
-  var chartDataRequests = toggleChartSubject /*Rx.Observable.fromEvent($('table'), 'mouseenter')
-                                             .switchMap(() => Rx.Observable.fromEvent($('img'), 'click'))*/
-  .flatMap(function (id) {
-    return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(id)));
-  }).map(function (res) {
-    return function (state) {
-      return state.setIn(['chart', 'data'], new _immutable.List(res.data)).setIn(['chart', 'show'], true);
-    };
-  });
-
-  _rxjs2.default.Observable.fromEvent((0, _jquery2.default)('.chart-container'), 'click').forEach(function (e) {
-    return e.stopPropagation();
-  });
-
-  return {
-    toggleChart: function toggleChart(id) {
-      return toggleChartSubject.next(id);
-    },
-    chartStreams: _rxjs2.default.Observable.merge(toggleChartStream, chartDataRequests)
-  };
 };
 
 exports.default = chartState;
