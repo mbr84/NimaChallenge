@@ -2,23 +2,23 @@ import { tr, th, td, table, thead } from 'snabbdom-helpers';
 import carRow from './carRow'
 
 const carsView = (state, actions) => {
-  const currentPage = +state.get('currentPage')
-  const cars = state.get('cars')
-    .slice(currentPage * 15, (currentPage + 1) * 15)
-    .map((car, i) => carRow(car, actions))
+    const currentPage = +state.get('currentPage')
+    const cars = state.get('cars')
+        .slice(currentPage * 15, (currentPage + 1) * 15)
+        .map((car, i) => carRow(car, actions))
 
-  return table({
-    inner: [
-      thead({
+    return table({
         inner: [
-          th({inner: ["MAKE"]}),
-          th({inner: ["MODEL"]}),
-          th({inner: ["YEAR"]}),
-          th({inner: ["PRICE"]}),
+            thead({
+                inner: [
+                    th({inner: ["MAKE"]}),
+                    th({inner: ["MODEL"]}),
+                    th({inner: ["YEAR"]}),
+                    th({inner: ["PRICE"]}),
+                ]
+            }),
+            ...cars
         ]
-      }),
-      ...cars
-    ]
-  })
+    })
 }
 module.exports = carsView

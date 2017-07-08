@@ -42619,23 +42619,23 @@ var _immutable = __webpack_require__(81);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener("DOMContentLoaded", function () {
-  var root = document.getElementById('list-root');
-  var initialState = new _immutable.Map({
-    isAdding: false,
-    cars: new _immutable.List(),
-    currentPage: 0,
-    chart: new _immutable.Map({ data: new _immutable.List(), show: false })
-  });
+    var root = document.getElementById('list-root');
+    var initialState = new _immutable.Map({
+        isAdding: false,
+        cars: new _immutable.List(),
+        currentPage: 0,
+        chart: new _immutable.Map({ data: new _immutable.List(), show: false })
+    });
 
-  var _initializeAppState = (0, _appState2.default)(),
-      state = _initializeAppState.state,
-      actions = _initializeAppState.actions;
+    var _initializeAppState = (0, _appState2.default)(),
+        state = _initializeAppState.state,
+        actions = _initializeAppState.actions;
 
-  var render = (0, _vdom2.default)(root, initialState, actions);
+    var render = (0, _vdom2.default)(root, initialState, actions);
 
-  state.subscribe(function (currentState) {
-    render(currentState, actions);
-  });
+    state.subscribe(function (currentState) {
+        render(currentState, actions);
+    });
 });
 
 /***/ }),
@@ -51291,16 +51291,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var carsView = function carsView(state, actions) {
-  var currentPage = +state.get('currentPage');
-  var cars = state.get('cars').slice(currentPage * 15, (currentPage + 1) * 15).map(function (car, i) {
-    return (0, _carRow2.default)(car, actions);
-  });
+    var currentPage = +state.get('currentPage');
+    var cars = state.get('cars').slice(currentPage * 15, (currentPage + 1) * 15).map(function (car, i) {
+        return (0, _carRow2.default)(car, actions);
+    });
 
-  return (0, _snabbdomHelpers.table)({
-    inner: [(0, _snabbdomHelpers.thead)({
-      inner: [(0, _snabbdomHelpers.th)({ inner: ["MAKE"] }), (0, _snabbdomHelpers.th)({ inner: ["MODEL"] }), (0, _snabbdomHelpers.th)({ inner: ["YEAR"] }), (0, _snabbdomHelpers.th)({ inner: ["PRICE"] })]
-    })].concat(_toConsumableArray(cars))
-  });
+    return (0, _snabbdomHelpers.table)({
+        inner: [(0, _snabbdomHelpers.thead)({
+            inner: [(0, _snabbdomHelpers.th)({ inner: ["MAKE"] }), (0, _snabbdomHelpers.th)({ inner: ["MODEL"] }), (0, _snabbdomHelpers.th)({ inner: ["YEAR"] }), (0, _snabbdomHelpers.th)({ inner: ["PRICE"] })]
+        })].concat(_toConsumableArray(cars))
+    });
 };
 module.exports = carsView;
 
@@ -64502,7 +64502,7 @@ exports.default = exports.eventListenersModule;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _rxjs = __webpack_require__(70);
@@ -64532,30 +64532,30 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var initializeAppState = function initializeAppState() {
-  var _chartState = (0, _chartState3.default)(),
-      chartStreams = _chartState.chartStreams,
-      toggleChart = _chartState.toggleChart;
+    var _chartState = (0, _chartState3.default)(),
+        chartStreams = _chartState.chartStreams,
+        toggleChart = _chartState.toggleChart;
 
-  var actions = { nextPage: Nav.nextPage, lastPage: Nav.lastPage, toggleChart: toggleChart };
+    var actions = { nextPage: Nav.nextPage, lastPage: Nav.lastPage, toggleChart: toggleChart };
 
-  var initialState = new _immutable.Map({
-    isAdding: false,
-    totalPages: 0,
-    currentPage: window.localStorage.getItem('currentPage') || 0,
-    cars: new _immutable.List(),
-    chart: new _immutable.Map({ show: false, data: new _immutable.List() })
-  });
+    var initialState = new _immutable.Map({
+        isAdding: false,
+        totalPages: 0,
+        currentPage: window.localStorage.getItem('currentPage') || 0,
+        cars: new _immutable.List(),
+        chart: new _immutable.Map({ show: false, data: new _immutable.List() })
+    });
 
-  var requestStreams = (0, _carRequestStreams2.default)();
+    var requestStreams = (0, _carRequestStreams2.default)();
 
-  var state = _rxjs2.default.Observable.merge(chartStreams, Nav.streams, requestStreams).scan(function (state, stateChangeFn) {
-    return stateChangeFn(state);
-  }, initialState);
+    var state = _rxjs2.default.Observable.merge(chartStreams, Nav.streams, requestStreams).scan(function (state, stateChangeFn) {
+        return stateChangeFn(state);
+    }, initialState);
 
-  return {
-    state: state,
-    actions: actions
-  };
+    return {
+        state: state,
+        actions: actions
+    };
 };
 
 exports.default = initializeAppState;
@@ -78541,7 +78541,7 @@ exports.AnimationFrameScheduler = AnimationFrameScheduler;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.streams = exports.lastPage = exports.nextPage = undefined;
 
@@ -78554,27 +78554,27 @@ var _utils = __webpack_require__(103);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var changePage = function changePage(delta) {
-  return function (state) {
-    var newPage = +state.get('currentPage') + delta;
-    (0, _utils.localStorageAsync)(newPage);
-    return state.set('currentPage', newPage);
-  };
+    return function (state) {
+        var newPage = +state.get('currentPage') + delta;
+        (0, _utils.localStorageAsync)(newPage);
+        return state.set('currentPage', newPage);
+    };
 };
 
 var nextPageSubject = new _rxjs2.default.Subject();
 var nextPageClickStream = nextPageSubject.map(function () {
-  return changePage(1);
+    return changePage(1);
 });
 var nextPage = exports.nextPage = function nextPage() {
-  return nextPageSubject.next();
+    return nextPageSubject.next();
 };
 
 var lastPageSubject = new _rxjs2.default.Subject();
 var lastPageClickStream = lastPageSubject.map(function () {
-  return changePage(-1);
+    return changePage(-1);
 });
 var lastPage = exports.lastPage = function lastPage() {
-  return lastPageSubject.next();
+    return lastPageSubject.next();
 };
 
 var streams = exports.streams = _rxjs2.default.Observable.merge(nextPageClickStream, lastPageClickStream);

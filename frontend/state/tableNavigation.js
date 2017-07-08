@@ -2,9 +2,9 @@ import Rx from 'rxjs'
 import { localStorageAsync } from '../utils/utils'
 
 const changePage = delta => state => {
-  const newPage = +state.get('currentPage') + delta
-  localStorageAsync(newPage)
-  return state.set('currentPage', newPage)
+    const newPage = +state.get('currentPage') + delta
+    localStorageAsync(newPage)
+    return state.set('currentPage', newPage)
 }
 
 const nextPageSubject = new Rx.Subject()
