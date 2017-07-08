@@ -2,12 +2,13 @@ import $                  from 'jquery';
 import { renderCanvas }   from '../utils/utils'
 import { canvas, div, i } from 'snabbdom-helpers'
 
-const chartView = state => {
+const chartView = (state, actions) => {
   const show = state.get('show')
   const visibility = show ? "visible" : "hidden"
   const opacity = show ? "1" : "0"
   const text = state.get('data').size === 0 ? "Sorry, there's no data available for this car" : ""
   const textPadding = state.get('data').size === 0 ? "17%" : "0"
+  const { toggleChart } = actions
 
   renderCanvas(state)
 

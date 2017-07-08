@@ -3,17 +3,15 @@ import $                from 'jquery'
 import { List }         from 'immutable'
 import { priceUrl }     from '../utils/utils'
 
-const chartStateStreams = () => {
+const chartState = () => {
   const toggleChartSubject = new Rx.Subject()
 
   const toggleChartStream = toggleChartSubject.merge(
-    Rx.Observable.fromEvent($(document), 'keydown').filter(e => e.which === 27)
-  )
+    Rx.Observable.fromEvent($(document), 'keydown')
+      .filter(e => e.which === 27)
+    )
     .map(() => state =>
       state.setIn(['chart', 'show'], !state.getIn(['chart'], 'show')))
-
-  const toggleChart = () => toggleChartSubject.next()
-
 
   const chartDataRequests = Rx.Observable.fromEvent($('table'), 'mouseenter')
     .switchMap(() => Rx.Observable.fromEvent($('img'), 'click'))
@@ -22,13 +20,14 @@ const chartStateStreams = () => {
       state.setIn(['chart', 'data'], new List(res.data)).setIn(['chart', 'show'], true))
 
   Rx.Observable.fromEvent($('.chart-container'), 'click').forEach(e => e.stopPropagation())
+
   return {
+    toggleChart: () => toggleChartSubject.next(),
     chartStreams: Rx.Observable.merge(
       toggleChartStream,
       chartDataRequests,
-    ),
-    toggleChart
+    )
   }
 }
 
-export default chartStateStreams;
+export default chartState;

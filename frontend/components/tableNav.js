@@ -1,9 +1,9 @@
 import { div, i } from 'snabbdom-helpers';
 
-const navButtons = state => {
+const navButtons = (state, actions) => {
   const hasPrevPage = state.get('currentPage') > 0
   const hasNextPage = state.get('currentPage') < state.get('totalPages')
-  const { nextPage, lastPage } = state.get('pageNavActions')
+  const { nextPage, lastPage } = actions
 
   return div({
     style: {display: 'flex', justifyContent: 'space-around', margin: '15px 0 35px 0'},

@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPage: 0,
     chart: new Map({data: new List(), show: false})
   })
-  const render = createRenderer(root, initialState);
-  const state = initializeAppState();
+  const { state, actions } = initializeAppState();
+  const render = createRenderer(root, initialState, actions);
 
   state.subscribe(currentState => {
-    render(currentState)
+    render(currentState, actions)
   })
 })

@@ -9,10 +9,10 @@ const patch = init([
   require('snabbdom/modules/eventlisteners').default,
 ]);
 
-const createRenderer = (root, initialState) => {
-  let vnode = patch(root, view(initialState))
-  return state => {
-    vnode = patch(vnode, view(state));
+const createRenderer = (root, initialState, actions) => {
+  let vnode = patch(root, view(initialState, actions))
+  return (state, actions) => {
+    vnode = patch(vnode, view(state, actions));
   }
 }
 

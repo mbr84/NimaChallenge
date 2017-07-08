@@ -4,14 +4,14 @@ import carList from './carList'
 import navButtons from './tableNav'
 import chartView from './chart'
 
-const view = state =>
+const view = (state, actions) =>
   main({
     inner: [
       h1({inner: "Your Car Lot"}),
       addCarForm(state.get('isAdding')),
       carList(state),
-      navButtons(state),
-      chartView(state.get('chart'))
+      navButtons(state, actions),
+      chartView(state.get('chart'), actions)
     ]
   })
 
