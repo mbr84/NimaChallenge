@@ -16,16 +16,16 @@ const chartState = () => {
         .filter(data => typeof data === "number")
         .flatMap(id => Rx.Observable.fromPromise($.ajax(priceUrl(id))))
         .map(res => state =>
-          state.setIn(['chart', 'data'], new List(res.data)).setIn(['chart', 'show'], true))
+            state.setIn(['chart', 'data'], new List(res.data)).setIn(['chart', 'show'], true))
 
     Rx.Observable.fromEvent($('.chart-container'), 'click').forEach(e => e.stopPropagation())
 
     return {
-    toggleChart: id => toggleChartSubject.next(id),
-    chartStreams: Rx.Observable.merge(
-      toggleChartStream,
-      chartDataRequests,
-    )
+        toggleChart: id => toggleChartSubject.next(id),
+        chartStreams: Rx.Observable.merge(
+            toggleChartStream,
+            chartDataRequests,
+        )
     }
 }
 

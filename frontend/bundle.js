@@ -42646,7 +42646,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _snabbdom = __webpack_require__(318);
@@ -42664,10 +42664,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var patch = (0, _snabbdom.init)([__webpack_require__(592).default, __webpack_require__(593).default, __webpack_require__(594).default, __webpack_require__(595).default]);
 
 var createRenderer = function createRenderer(root, initialState, actions) {
-  var vnode = patch(root, (0, _view2.default)(initialState, actions));
-  return function (state, actions) {
-    vnode = patch(vnode, (0, _view2.default)(state, actions));
-  };
+    var vnode = patch(root, (0, _view2.default)(initialState, actions));
+    return function (state, actions) {
+        vnode = patch(vnode, (0, _view2.default)(state, actions));
+    };
 };
 
 exports.default = createRenderer;
@@ -43118,7 +43118,7 @@ exports.default = exports.thunk;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _snabbdomHelpers = __webpack_require__(35);
@@ -43142,9 +43142,9 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var view = function view(state, actions) {
-  return (0, _snabbdomHelpers.main)({
-    inner: [(0, _snabbdomHelpers.h1)({ inner: "Your Car Lot" }), (0, _addCarForm2.default)(state.get('isAdding')), (0, _carList2.default)(state, actions), (0, _tableNav2.default)(state, actions), (0, _chart2.default)(state.get('chart'), actions)]
-  });
+    return (0, _snabbdomHelpers.main)({
+        inner: [(0, _snabbdomHelpers.h1)({ inner: "Your Car Lot" }), (0, _addCarForm2.default)(state.get('isAdding')), (0, _carList2.default)(state, actions), (0, _tableNav2.default)(state, actions), (0, _chart2.default)(state.get('chart'), actions)]
+    });
 };
 
 exports.default = view;
