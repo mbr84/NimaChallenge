@@ -24,7 +24,7 @@ const chartView = (state, actions) => {
       height: '100vh',
       width: '100vw',
     },
-    on: { click: state.get('toggleChart')},
+    on: { click: toggleChart},
     inner: div({
       selector: '.chart-container',
       style: {
@@ -45,7 +45,7 @@ const chartView = (state, actions) => {
             selector: ".material-icons",
             inner: "close",
             style: { cursor: 'pointer' },
-            on: { click: state.get('toggleChart') }
+            on: { click: toggleChart }
           })
         ]}),
         div({
