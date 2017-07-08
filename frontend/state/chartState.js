@@ -13,7 +13,7 @@ const chartState = () => {
             state.setIn(['chart', 'show'], !state.getIn(['chart'], 'show')))
 
     const toggleChartOn$ = toggleChartSubject
-        .filter(data => typeof data === "number")
+        .filter(data => typeof data === "string")
         .flatMap(id => Rx.Observable.fromPromise($.ajax(priceUrl(id))))
         .map(res => state =>
             state.setIn(['chart', 'data'], new List(res.data)).setIn(['chart', 'show'], true))
@@ -21,7 +21,7 @@ const chartState = () => {
     Rx.Observable.fromEvent($('.chart-container'), 'click').forEach(e => e.stopPropagation())
 
     return {
-        toggleChart: e => { console.log(e); toggleChartSubject.next(e.target.id) },
+        toggleChart: e => toggleChartSubject.next(e.target.id),
         chartStreams: Rx.Observable.merge(
             toggleChartOff$,
             toggleChartOn$,

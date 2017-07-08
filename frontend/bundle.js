@@ -78694,7 +78694,7 @@ var chartState = function chartState() {
     });
 
     var toggleChartOn$ = toggleChartSubject.filter(function (data) {
-        return typeof data === "number";
+        return typeof data === "string";
     }).flatMap(function (id) {
         return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(id)));
     }).map(function (res) {
@@ -78709,7 +78709,7 @@ var chartState = function chartState() {
 
     return {
         toggleChart: function toggleChart(e) {
-            console.log(e);toggleChartSubject.next(e.target.id);
+            return toggleChartSubject.next(e.target.id);
         },
         chartStreams: _rxjs2.default.Observable.merge(toggleChartOff$, toggleChartOn$)
     };
