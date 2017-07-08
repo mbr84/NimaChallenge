@@ -6,13 +6,13 @@ import { priceUrl }     from '../utils/utils'
 const chartState = () => {
     const toggleChartSubject = new Rx.Subject()
 
-    const toggleChartOff = toggleChartSubject.merge(
+    const toggleChartOff$ = toggleChartSubject.merge(
         Rx.Observable.fromEvent($(document), 'keydown').filter(e => e.which === 27)
     )
         .map(() => state =>
             state.setIn(['chart', 'show'], !state.getIn(['chart'], 'show')))
 
-    const chartDataRequests = toggleChartSubject
+    const toggleChartOn$ = toggleChartSubject
         .filter(data => typeof data === "number")
         .flatMap(id => Rx.Observable.fromPromise($.ajax(priceUrl(id))))
         .map(res => state =>
@@ -21,10 +21,10 @@ const chartState = () => {
     Rx.Observable.fromEvent($('.chart-container'), 'click').forEach(e => e.stopPropagation())
 
     return {
-        toggleChart: id => toggleChartSubject.next(id),
+        toggleChart: e => toggleChartSubject.next(e.currentTarget.id),
         chartStreams: Rx.Observable.merge(
-            toggleChartOff,
-            chartDataRequests,
+            toggleChartOff$,
+            toggleChartOn$,
         )
     }
 }

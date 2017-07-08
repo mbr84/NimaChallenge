@@ -51327,7 +51327,13 @@ var carRow = function carRow(car, actions) {
   return (0, _snabbdomHelpers.tr)({
     inner: [(0, _snabbdomHelpers.td)({ inner: car.make }), (0, _snabbdomHelpers.td)({ inner: car.model }), (0, _snabbdomHelpers.td)({ inner: car.year }), (0, _snabbdomHelpers.td)({
       selector: ".price-cell",
-      inner: (0, _snabbdomHelpers.img)({ props: { src: "./images/data-icon.png", id: car.id }, on: { click: actions.toggleChart.bind(null, car.id) } })
+      inner: (0, _snabbdomHelpers.img)({
+        props: {
+          src: "./images/data-icon.png",
+          id: car.id
+        },
+        on: { click: actions.toggleChart }
+      })
     })]
   });
 };
@@ -78679,7 +78685,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var chartState = function chartState() {
     var toggleChartSubject = new _rxjs2.default.Subject();
 
-    var toggleChartOff = toggleChartSubject.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
+    var toggleChartOff$ = toggleChartSubject.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
         return e.which === 27;
     })).map(function () {
         return function (state) {
@@ -78687,7 +78693,7 @@ var chartState = function chartState() {
         };
     });
 
-    var chartDataRequests = toggleChartSubject.filter(function (data) {
+    var toggleChartOn$ = toggleChartSubject.filter(function (data) {
         return typeof data === "number";
     }).flatMap(function (id) {
         return _rxjs2.default.Observable.fromPromise(_jquery2.default.ajax((0, _utils.priceUrl)(id)));
@@ -78702,10 +78708,10 @@ var chartState = function chartState() {
     });
 
     return {
-        toggleChart: function toggleChart(id) {
-            return toggleChartSubject.next(id);
+        toggleChart: function toggleChart(e) {
+            return toggleChartSubject.next(e.currentTarget.id);
         },
-        chartStreams: _rxjs2.default.Observable.merge(toggleChartOff, chartDataRequests)
+        chartStreams: _rxjs2.default.Observable.merge(toggleChartOff$, toggleChartOn$)
     };
 };
 
