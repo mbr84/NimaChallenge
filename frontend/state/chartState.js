@@ -6,7 +6,7 @@ import { priceUrl }     from '../utils/utils'
 const chartState = () => {
     const toggleChartSubject = new Rx.Subject()
 
-    const toggleChartOff$ = toggleChartSubject.merge(
+    const toggleChartOff = toggleChartSubject.merge(
         Rx.Observable.fromEvent($(document), 'keydown').filter(e => e.which === 27)
     )
         .map(() => state =>
@@ -23,7 +23,7 @@ const chartState = () => {
     return {
         toggleChart: id => toggleChartSubject.next(id),
         chartStreams: Rx.Observable.merge(
-            toggleChartStream,
+            toggleChartOff,
             chartDataRequests,
         )
     }

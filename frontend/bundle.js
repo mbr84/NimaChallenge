@@ -78679,7 +78679,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var chartState = function chartState() {
     var toggleChartSubject = new _rxjs2.default.Subject();
 
-    var toggleChartOff$ = toggleChartSubject.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
+    var toggleChartOff = toggleChartSubject.merge(_rxjs2.default.Observable.fromEvent((0, _jquery2.default)(document), 'keydown').filter(function (e) {
         return e.which === 27;
     })).map(function () {
         return function (state) {
@@ -78705,7 +78705,7 @@ var chartState = function chartState() {
         toggleChart: function toggleChart(id) {
             return toggleChartSubject.next(id);
         },
-        chartStreams: _rxjs2.default.Observable.merge(toggleChartStream, chartDataRequests)
+        chartStreams: _rxjs2.default.Observable.merge(toggleChartOff, chartDataRequests)
     };
 };
 
