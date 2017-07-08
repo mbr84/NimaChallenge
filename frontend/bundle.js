@@ -78709,7 +78709,7 @@ var chartState = function chartState() {
 
     return {
         toggleChart: function toggleChart(e) {
-            return toggleChartSubject.next(e.currentTarget.id);
+            console.log(e);toggleChartSubject.next(e.currentTarget.id);
         },
         chartStreams: _rxjs2.default.Observable.merge(toggleChartOff$, toggleChartOn$)
     };

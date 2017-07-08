@@ -21,7 +21,7 @@ const chartState = () => {
     Rx.Observable.fromEvent($('.chart-container'), 'click').forEach(e => e.stopPropagation())
 
     return {
-        toggleChart: e => toggleChartSubject.next(e.currentTarget.id),
+        toggleChart: e => { console.log(e); toggleChartSubject.next(e.currentTarget.id) },
         chartStreams: Rx.Observable.merge(
             toggleChartOff$,
             toggleChartOn$,

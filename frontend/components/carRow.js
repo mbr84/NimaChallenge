@@ -10,12 +10,12 @@ const carRow = (car, actions) =>
       td({
         selector: ".price-cell",
         inner: img({
-            props: {
-                src: "./images/data-icon.png",
-                id: car.id
-            },
-            on: { click: actions.toggleChart }
-        })
+                props: {
+                    src: "./images/data-icon.png",
+                    id: car.id
+                },
+                on: { click: actions.toggleChart }
+            })
       }),
     ]
   })
